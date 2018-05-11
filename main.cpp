@@ -34,6 +34,14 @@ struct PIXELDATA{
     uint8_t g;
 };
 
+PIXELDATA get_interpolated_pixel(PIXELDATA Fx0, PIXELDATA Fx1, double x0, double x1, int x){
+    PIXELDATA pixel;
+    pixel.r = (int) floor(Fx0.r + ((Fx1.r - Fx0.r) / (x1 - x0)) * (x - x0));
+    pixel.g = (int) floor(Fx0.g + ((Fx1.g - Fx0.g) / (x1 - x0)) * (x - x0));
+    pixel.b = (int) floor(Fx0.b + ((Fx1.b - Fx0.b) / (x1 - x0)) * (x - x0));
+    return pixel;
+}
+
 int byte_per_line(int width){
     int result;
     result = width * 3;
