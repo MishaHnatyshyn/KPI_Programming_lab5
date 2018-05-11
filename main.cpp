@@ -46,7 +46,11 @@ int byte_per_line(int width){
 }
 
 
-int main() {
+int main(int argc, char* argv[]) {
+    char * input_path = argv[1];
+    char * output_path = argv[2];
+    double resize = atof(argv[3]);
+    
     int resize_count = 7;
 
     FILE * file;
