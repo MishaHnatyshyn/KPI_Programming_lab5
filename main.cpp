@@ -34,24 +34,31 @@ struct PIXELDATA{
     uint8_t g;
 };
 
+int byte_per_line(int width){
+    int result;
+    result = width * 3;
+    if (result & 0x0003)
+    {
+        result |= 0x0003;
+        ++result;
+    }
+    return result;
+}
+
+
 int main() {
     int resize_count = 7;
 
     FILE * file;
     file = fopen("/home/mhnatyshyn/Programming_labs/Lab5/bmp.bmp","rb");
 
-    BM bm;
-    BM2 bm2;
+    BITMAPFILEHEADER bm;
+    BITMAPINFOHEADER bm2;
+
     fread(&bm, 1, 14, file);
     fread(&bm2, 1, 40, file);
-    
-    int bytesPerLine;
-    bytesPerLine = bm2.width * 3;
-    if (bytesPerLine & 0x0003)
-    {
-        bytesPerLine |= 0x0003;
-        ++bytesPerLine;
-    }
+
+    int bytesPerLine = byte_per_line(bm2.width);
 
     FILE * output;
     output = fopen("/home/mhnatyshyn/Programming_labs/Lab5/output.bmp","wb");
@@ -59,14 +66,7 @@ int main() {
     PIXELDATA map[bm2.depth][bm2.width];
     PIXELDATA map2[bm2.depth * resize_count][bm2.width * resize_count];
 
-    int new_bytesPerLine;
-
-    new_bytesPerLine = bm2.width * resize_count * 3;
-    if (new_bytesPerLine & 0x0003)
-    {
-        new_bytesPerLine |= 0x0003;
-        ++new_bytesPerLine;
-    }
+    int new_bytesPerLine = byte_per_line(bm2.width * resize_count);
 
     bm.bfSize=54+(long)new_bytesPerLine*bm2.depth * resize_count;
 
@@ -84,7 +84,7 @@ int main() {
     }
 
     //new matrix creating
-    
+
     int p = 0;
     int s = 0;
     for (int i = 0; i < bm2.depth; ++i) {
@@ -115,7 +115,7 @@ int main() {
         }
         if(output_padding != 0) fwrite(&null_byte,1,output_padding,output);
     }
-    
+
     fclose(output);
     fclose(file);
 
