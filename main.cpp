@@ -4,16 +4,16 @@
 
 using namespace std;
 
-typedef struct {
-    unsigned char  b1, b2;      //Символы BM (смение 0, длина 2)
-    unsigned short  bfSize;      //Размер файла в байтах  (Смещение 2, длина 2)
-    unsigned short  bfReserved1;          //Бесполезно (Смещение 6, длина 2)
-    unsigned short  bfReserved2;          //Бесполезно (Смещение 8, длина 2)
-    unsigned short  padding;    //Мусор, для выравнивания
-    unsigned short  bfOffBits;
-} BM;
+struct BITMAPFILEHEADER{
+    int8_t  b1, b2;
+    int32_t bfSize;
+    int32_t  bfReserved1;
+    int32_t  bfReserved2;
+    int32_t  padding;
+    int32_t  bfOffBits;
+};
 
-typedef struct{
+struct BITMAPINFOHEADER{
     int32_t infoSize;
     int32_t width;
     int32_t depth;
@@ -25,13 +25,13 @@ typedef struct{
     int32_t biYPelsPerMeter;
     int32_t biClrUsed;
     int32_t biClrImportant;
-}  BM2;
+};
 
 
 struct PIXELDATA{
-    int8_t redComponent;
-    int8_t blueComponent;
-    int8_t greenComponent;
+    uint8_t r;
+    uint8_t b;
+    uint8_t g;
 };
 
 int main() {
