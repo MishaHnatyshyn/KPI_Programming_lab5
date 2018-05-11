@@ -75,8 +75,12 @@ int main(int argc, char* argv[]) {
     FILE * output;
     output = fopen("/home/mhnatyshyn/Programming_labs/Lab5/output.bmp","wb");
 
+    int new_depth = (int)floor(bm2.depth*resize);
+    int new_width = (int)floor(bm2.width*resize);
+
     PIXELDATA map[bm2.depth][bm2.width];
-    PIXELDATA map2[bm2.depth * resize_count][bm2.width * resize_count];
+    PIXELDATA map2[bm2.depth][new_width];
+    PIXELDATA map3[new_depth][new_width];
 
     int new_bytesPerLine = byte_per_line(bm2.width * resize_count);
 
