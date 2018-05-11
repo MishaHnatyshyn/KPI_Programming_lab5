@@ -117,6 +117,22 @@ int main(int argc, char* argv[]) {
             }
         }
 
+    for (int x = 0; x < new_depth; x++) {
+        int j = 0;
+        for (int y = 0; y < bm2.depth; y++) {
+            double y0= y*resize;
+            double y1= (y+1)*resize;
+            if(y0 == j || y1 == j){
+                map3[j][x] = map2[y][x];
+                j++;
+            }
+            while (j > y0 && j < y1) {
+                map3[j][x] = get_interpolated_pixel(map2[y][x], map2[y+1][x], y0, y1, j);
+                j++;
+            }
+        }
+    }
+
 
     bm2.depth *= resize_count;
     bm2.width *= resize_count;
