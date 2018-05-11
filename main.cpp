@@ -101,20 +101,21 @@ int main(int argc, char* argv[]) {
 
     //new matrix creating
 
-    int p = 0;
-    int s = 0;
-    for (int i = 0; i < bm2.depth; ++i) {
-        for (int l = 0; l < resize_count; ++l) {
-            for (int j = 0; j < bm2.width; ++j) {
-                for (int k = 0; k < resize_count; ++k) {
-                    map2[p][s] = map[i][j];
-                    s++;
+    for (int y = 0; y < bm2.depth; y++) {
+            int i = 0;
+            for (int x = 0; x < bm2.width; x++) {
+                double x0= x*resize;
+                double x1= (x+1)*resize;
+                if(x0 == i || x1 == i){
+                    map2[y][i] = map[y][x];
+                    i++;
+                }
+                while (i > x0 && i < x1) {
+                    map2[y][i] = get_interpolated_pixel(map[y][x], map[y][x+1], x0, x1, i);
+                    i++;
                 }
             }
-            s = 0;
-            p++;
         }
-    }
 
 
     bm2.depth *= resize_count;
