@@ -1,1 +1,1 @@
-# KPI_Programming_lab5
+# .bmp files resizing using interpolation
